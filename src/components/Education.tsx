@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useSpring, useMotionValue, useTransform } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BookOpen, CheckCircle, Brain, PenTool, Award, Clock, Star, Hexagon, Terminal, Layout, Code } from 'lucide-react';
 
 const CATEGORIES = {
@@ -93,17 +93,17 @@ function AutoCarousel() {
   const carouselItems = [...CERTIFICATIONS, ...CERTIFICATIONS];
 
   return (
-    <div className="w-full overflow-hidden mt-16 pb-8 relative mask-horizontal-fade">
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-app-bg to-transparent z-10 pointer-events-none" />
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-app-bg to-transparent z-10 pointer-events-none" />
+    <div className="w-full max-w-full overflow-hidden mt-10 sm:mt-16 pb-8 relative mask-horizontal-fade">
+      <div className="hidden sm:block absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-app-bg to-transparent z-10 pointer-events-none" />
+      <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-app-bg to-transparent z-10 pointer-events-none" />
       
-      <div className="flex gap-6 w-max animate-marquee hover:[animation-play-state:paused]">
+      <div className="flex gap-4 sm:gap-6 w-max max-w-none animate-marquee hover:[animation-play-state:paused]">
         {carouselItems.map((cert, i) => {
           const Icon = cert.icon;
           return (
-            <div key={i} className="w-[300px] shrink-0">
+            <div key={i} className="w-[min(18rem,calc(100vw-2rem))] sm:w-[300px] shrink-0">
               <TiltCard>
-                <div className="glass-card p-6 h-full flex flex-col justify-between border-app-border hover:border-electric-blue/40 transition-colors">
+                <div className="glass-card p-5 sm:p-6 h-full flex flex-col justify-between border-app-border hover:border-electric-blue/40 transition-colors">
                   <div className="flex justify-between items-start mb-6">
                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br ${cert.color} text-white shadow-lg`}>
                         <Icon className="w-5 h-5" />
@@ -136,19 +136,19 @@ export function Education() {
   const filteredCerts = CERTIFICATIONS.filter(c => activeTab === CATEGORIES.ALL || c.category === activeTab);
 
   return (
-    <section id="certifications" className="py-24 relative z-10 px-6 max-w-7xl mx-auto overflow-hidden">
+    <section id="certifications" className="py-16 sm:py-20 lg:py-24 relative z-10 px-4 sm:px-6 max-w-7xl mx-auto overflow-x-clip">
       {/* Background Ornaments */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-electric-blue/5 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
-      <div className="mb-16 border-l-2 border-electric-blue/50 pl-6 relative">
+      <div className="mb-10 sm:mb-16 border-l-2 border-electric-blue/50 pl-4 sm:pl-6 relative max-w-full">
         <div className="absolute -left-[2px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-electric-blue via-purple-500 to-transparent" />
-        <h2 className="text-3xl md:text-5xl font-semibold mb-4 text-app-text">Courses & Certifications</h2>
-        <p className="text-muted-text font-light text-lg">Continuous learning is key to staying ahead. Here are my recent qualifications.</p>
+        <h2 className="text-[clamp(2rem,10vw,3rem)] md:text-5xl font-semibold mb-4 text-app-text leading-tight break-words">Courses & Certifications</h2>
+        <p className="text-muted-text font-light text-base sm:text-lg leading-relaxed max-w-3xl">Continuous learning is key to staying ahead. Here are my recent qualifications.</p>
       </div>
 
       {/* Floating Educational Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 sm:mb-16">
         <StatBox icon={Award} value="11" label="Total Certs" delay={0.1} />
         <StatBox icon={Clock} value="350+" label="Learning Hrs" delay={0.2} />
         <StatBox icon={Brain} value="6" label="AI Courses" delay={0.3} />
@@ -156,12 +156,12 @@ export function Education() {
       </div>
 
       {/* Category Filters */}
-      <div className="flex flex-wrap items-center gap-3 mb-10 overflow-x-auto pb-4 hide-scrollbar">
+      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-10 max-w-full">
         {Object.values(CATEGORIES).map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveTab(cat)}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+            className={`max-w-full px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all whitespace-normal sm:whitespace-nowrap text-center ${
               activeTab === cat 
                 ? 'bg-app-text text-app-bg shadow-[0_0_20px_rgba(255,255,255,0.1)]' 
                 : 'glass-panel text-muted-text hover:text-app-text hover:border-electric-blue/30'
@@ -173,7 +173,7 @@ export function Education() {
       </div>
 
       {/* Bento Grid layout for active filtered certs */}
-      <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full max-w-full">
         <AnimatePresence mode="popLayout">
           {filteredCerts.map((cert, i) => {
             const Icon = cert.icon;
@@ -185,39 +185,40 @@ export function Education() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
+                className="w-full min-w-0"
               >
                 <TiltCard>
-                  <div className="glass-card p-6 h-full flex flex-col justify-between border-app-border hover:border-electric-blue/50 hover:shadow-[0_0_30px_rgba(0,122,255,0.15)] transition-all duration-500 overflow-hidden relative group/card">
+                  <div className="glass-card p-5 sm:p-6 h-full w-full min-w-0 flex flex-col justify-between border-app-border hover:border-electric-blue/50 hover:shadow-[0_0_30px_rgba(0,122,255,0.15)] transition-all duration-500 overflow-hidden relative group/card">
                     
                     {/* Animated Holographic Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-[150%] group-hover/card:translate-x-[150%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 ease-in-out pointer-events-none" />
 
-                    <div className="flex justify-between items-start mb-12 relative z-10">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${cert.color} text-white shadow-lg relative`}>
+                    <div className="flex justify-between items-start gap-3 mb-10 sm:mb-12 relative z-10">
+                      <div className={`w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br ${cert.color} text-white shadow-lg relative`}>
                         <div className="absolute inset-0 bg-white/20 rounded-xl blur animate-pulse" />
                         <Icon className="w-6 h-6 relative z-10" />
                       </div>
                       
-                      <div className="flex flex-col items-end gap-2">
-                        <div className="flex items-center gap-1.5 bg-electric-blue/10 border border-electric-blue/20 text-electric-blue px-3 py-1 rounded-full">
+                      <div className="flex min-w-0 flex-col items-end gap-2">
+                        <div className="flex items-center gap-1.5 bg-electric-blue/10 border border-electric-blue/20 text-electric-blue px-3 py-1 rounded-full max-w-full">
                           <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-blue opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-electric-blue"></span>
                           </span>
-                          <span className="font-mono text-[10px] font-bold tracking-wider uppercase tracking-widest text-[#007AFF]">Verified</span>
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#007AFF]">Verified</span>
                         </div>
                         <span className="font-mono text-xs text-muted-text/80 bg-app-card px-2 py-1 rounded-md border border-app-border">{cert.year}</span>
                       </div>
                     </div>
                     
-                    <div className="relative z-10">
-                      <div className="text-[10px] uppercase tracking-widest text-electric-blue mb-2 font-mono">{cert.category}</div>
-                      <h4 className="text-lg font-semibold text-app-text mb-2 leading-tight group-hover/card:text-electric-blue transition-colors">
+                    <div className="relative z-10 min-w-0">
+                      <div className="text-[10px] uppercase tracking-widest text-electric-blue mb-2 font-mono break-words">{cert.category}</div>
+                      <h4 className="text-lg font-semibold text-app-text mb-2 leading-tight group-hover/card:text-electric-blue transition-colors break-words">
                         {cert.title}
                       </h4>
-                      <p className="text-muted-text/80 text-sm flex items-center gap-2">
-                        <Hexagon className="w-3.5 h-3.5 text-muted-text/50" />
-                        {cert.platform}
+                      <p className="text-muted-text/80 text-sm flex items-center gap-2 min-w-0">
+                        <Hexagon className="w-3.5 h-3.5 shrink-0 text-muted-text/50" />
+                        <span className="min-w-0 break-words">{cert.platform}</span>
                       </p>
                     </div>
                   </div>
@@ -229,9 +230,9 @@ export function Education() {
       </motion.div>
 
       {/* Futuristic Auto-scrolling Carousel */}
-      <div className="mt-24 pt-16 border-t border-app-border/50 relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-app-bg px-4">
-          <div className="flex items-center gap-2 text-xs font-mono text-muted-text/60 uppercase tracking-widest">
+      <div className="mt-16 sm:mt-24 pt-12 sm:pt-16 border-t border-app-border/50 relative max-w-full overflow-x-clip">
+        <div className="absolute top-0 left-0 right-0 -translate-y-1/2 flex justify-center px-4">
+          <div className="flex items-center justify-center gap-2 text-[10px] sm:text-xs font-mono text-muted-text/60 uppercase tracking-widest bg-app-bg px-3 sm:px-4 text-center">
             <span className="w-8 h-[1px] bg-electric-blue/50" />
             Evolving Knowledge Stream
             <span className="w-8 h-[1px] bg-electric-blue/50" />
@@ -243,4 +244,3 @@ export function Education() {
     </section>
   );
 }
-
