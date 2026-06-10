@@ -101,3 +101,106 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  :root {
+    --glass-panel-bg: rgba(18, 18, 22, 0.82);
+    --mobile-grid-line: rgba(255, 255, 255, 0.055);
+  }
+
+  :root.light {
+    --glass-panel-bg: rgba(255, 255, 255, 0.88);
+    --mobile-grid-line: rgba(0, 0, 0, 0.055);
+  }
+
+  html,
+  body {
+    background-color: var(--bg-color);
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .site-background-effects {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.16), transparent 34rem),
+      radial-gradient(circle at 100% 85%, rgba(0, 240, 255, 0.08), transparent 28rem),
+      var(--bg-color);
+    contain: paint;
+    isolation: isolate;
+    transform: translateZ(0);
+  }
+
+  .site-background-grid {
+    opacity: 0.6;
+    background-image:
+      linear-gradient(to right, var(--mobile-grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--mobile-grid-line) 1px, transparent 1px) !important;
+    background-size: 72px 72px !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .site-ambient-glow {
+    opacity: 0.55;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .glass-panel,
+  .glass-card {
+    background-color: var(--glass-panel-bg);
+  }
+
+  .glass-panel,
+  .glass-card,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  [class*="mix-blend"],
+  .mobile-blend-layer {
+    mix-blend-mode: normal !important;
+  }
+
+  [class*="blur-"],
+  [class*="blur["],
+  [class*="blur\\["] {
+    filter: none !important;
+  }
+
+  .mobile-disable-scanline {
+    display: none !important;
+  }
+
+  .mobile-card-grid {
+    opacity: 0.045 !important;
+    background-size: 56px 56px !important;
+  }
+
+  .mobile-blend-layer {
+    opacity: 0.12 !important;
+  }
+
+  [style*="preserve-3d"] {
+    transform-style: flat !important;
+    perspective: none !important;
+  }
+
+  .tech-scale-wrapper,
+  .tech-orbit-wrapper,
+  .tech-node-inner {
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .animate-pulse,
+  .animate-ping {
+    animation: none !important;
+  }
+}

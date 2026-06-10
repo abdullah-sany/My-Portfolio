@@ -37,12 +37,12 @@ export function BackgroundEffects() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden transition-colors duration-500">
+    <div className="site-background-effects fixed inset-0 z-0 pointer-events-none overflow-hidden transition-colors duration-500">
       {/* Heavy vignette */}
       <div className="absolute inset-0 z-10" style={{ background: 'radial-gradient(ellipse at center, transparent 0%, var(--bg-color) 100%)' }} />
       
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-color)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-color)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_70%,transparent_100%)] transition-colors duration-500" />
+      <div className="site-background-grid absolute inset-0 bg-[linear-gradient(to_right,var(--border-color)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-color)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_70%,transparent_100%)] transition-colors duration-500" />
 
       {/* Dynamic Cursor Glow (Desktop Only, CSS updated via ref) */}
       <div
@@ -52,8 +52,8 @@ export function BackgroundEffects() {
       />
       
       {/* Static Ambient Orbs (Optimized without blur filters) */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[radial-gradient(circle_closest-side,rgba(30,58,138,0.15)_0%,transparent_100%)]" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle_closest-side,rgba(8,145,178,0.08)_0%,transparent_100%)]" />
+      <div className="site-ambient-glow absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[radial-gradient(circle_closest-side,rgba(30,58,138,0.15)_0%,transparent_100%)]" />
+      <div className="site-ambient-glow absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle_closest-side,rgba(8,145,178,0.08)_0%,transparent_100%)]" />
     </div>
   );
 }

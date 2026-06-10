@@ -64,7 +64,7 @@ export function Services() {
             </div>
             
             {/* Hover scanline effect */}
-            <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,122,255,0.05)_50%)] bg-[length:100%_4px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+            <div className="mobile-disable-scanline absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,122,255,0.05)_50%)] bg-[length:100%_4px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
           </motion.div>
         ))}
       </div>

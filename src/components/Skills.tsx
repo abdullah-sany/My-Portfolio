@@ -36,6 +36,7 @@ export function Skills() {
 
   useEffect(() => {
     if (!mounted || !orbitContainerRef.current) return;
+    if (window.matchMedia('(max-width: 768px)').matches) return;
 
     const container = orbitContainerRef.current;
     let rafId: number;

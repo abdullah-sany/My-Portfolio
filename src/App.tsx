@@ -11,14 +11,14 @@ import { Navbar } from './components/Navbar';
 import { MagneticCursor } from './components/MagneticCursor';
 import { Hero } from './components/Hero';
 
-const SITE_URL = 'https://mdabdulllahsany-ai.github.io/';
+const SITE_URL = 'https://abdullah-sany.github.io/';
 const SITE_TITLE = 'MD Abdullah Sany | AI-Hybrid Developer & Automation Specialist';
 const SITE_DESCRIPTION =
   'Portfolio of MD Abdullah Sany, an AI-Hybrid Developer, automation specialist, prompt engineer, and generative AI creator building intelligent web systems and digital experiences.';
-const PREVIEW_IMAGE = 'https://raw.githubusercontent.com/mdabdulllahsany-ai/Asset/main/Sany.png';
+const PREVIEW_IMAGE = 'https://raw.githubusercontent.com/abdullah-sany/Asset/main/Sany.png';
 const SAME_AS_LINKS = [
-  'https://github.com/mdabdulllahsany-ai',
-  'https://www.linkedin.com/in/md-abdullah-sany-1449363b5',
+  'https://github.com/abdullah-sany',
+  'https://www.linkedin.com/in/abdullah-sany-1449363b5',
   'https://x.com/ma_sany_01',
 ];
 const FAQ_SCHEMA_ITEMS = [

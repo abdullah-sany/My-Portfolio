@@ -189,10 +189,10 @@ function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: (
     >
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-app-bg/80 group-hover:bg-app-bg/60 transition-colors duration-500 z-10 mixture-blend-overlay" />
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-700 z-10 mix-blend-color-dodge`} />
+        <div className="mobile-blend-layer absolute inset-0 bg-app-bg/80 group-hover:bg-app-bg/60 transition-colors duration-500 z-10 mixture-blend-overlay" />
+        <div className={`mobile-blend-layer absolute inset-0 bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-700 z-10 mix-blend-color-dodge`} />
         {/* Tech Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 z-10" 
+        <div className="mobile-card-grid absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 z-10" 
              style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         <img 
           src={project.bgImage} 
@@ -319,8 +319,8 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
         >
           {/* Left Column: Visuals */}
           <div className="md:w-1/2 relative min-h-[300px] md:min-h-full">
-            <div className="absolute inset-0 bg-app-bg/40 z-10 mix-blend-overlay" />
-            <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 z-10 mix-blend-color-dodge`} />
+            <div className="mobile-blend-layer absolute inset-0 bg-app-bg/40 z-10 mix-blend-overlay" />
+            <div className={`mobile-blend-layer absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 z-10 mix-blend-color-dodge`} />
             <img 
               src={project.bgImage} 
               alt={project.title} 
