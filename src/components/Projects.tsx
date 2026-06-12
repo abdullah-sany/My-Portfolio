@@ -1,16 +1,42 @@
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { useState, useMemo, useEffect } from 'react';
-import { 
-  Rocket, Server, Gamepad2, Plane, Box, Heart, FileText, ShoppingBag, 
-  Calculator, CheckSquare, CloudRain, Bird, Cpu, Map, Hourglass, 
-  ShieldAlert, Eye, Github, Activity, ArrowUpRight, Zap, Target, Search
-} from 'lucide-react';
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import { useState, useMemo, useEffect } from "react";
+import { useEngagementTracker } from "../hooks/useEngagementTracker";
+import {
+  Rocket,
+  Server,
+  Gamepad2,
+  Plane,
+  Box,
+  Heart,
+  FileText,
+  ShoppingBag,
+  Calculator,
+  CheckSquare,
+  CloudRain,
+  Bird,
+  Cpu,
+  Map,
+  Hourglass,
+  ShieldAlert,
+  Eye,
+  Github,
+  Activity,
+  ArrowUpRight,
+  Zap,
+  Target,
+  Search,
+} from "lucide-react";
 
 const CATEGORIES = {
-  ALL: 'All Projects',
-  ROBOTICS: 'Innovation & Robotics',
-  WEB: 'Web Systems & AI Platforms',
-  GAMES: 'Games & Interactive Experiences'
+  ALL: "All Projects",
+  ROBOTICS: "Innovation & Robotics",
+  WEB: "Web Systems & AI Platforms",
 };
 
 const PROJECTS = [
@@ -122,9 +148,9 @@ function FilterTab({ label, active, onClick, icon: Icon }: any) {
     <button
       onClick={onClick}
       className={`relative px-6 py-3 rounded-full flex items-center gap-2 text-sm font-medium transition-all group overflow-hidden ${
-        active 
-          ? 'bg-electric-blue/10 text-electric-blue border-electric-blue/50 shadow-[0_0_20px_rgba(0,122,255,0.2)]' 
-          : 'bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30'
+        active
+          ? "bg-electric-blue/10 text-electric-blue border-electric-blue/50 shadow-[0_0_20px_rgba(0,122,255,0.2)]"
+          : "bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30"
       } border backdrop-blur-md`}
     >
       {active && (
@@ -135,13 +161,23 @@ function FilterTab({ label, active, onClick, icon: Icon }: any) {
           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
         />
       )}
-      <Icon className={`w-4 h-4 ${active ? 'animate-pulse' : 'group-hover:text-electric-blue/70 transition-colors'}`} />
+      <Icon
+        className={`w-4 h-4 ${active ? "animate-pulse" : "group-hover:text-electric-blue/70 transition-colors"}`}
+      />
       <span className="relative z-10">{label}</span>
     </button>
   );
 }
 
-function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: () => void, index?: number }) {
+function ProjectCard({
+  project,
+  onClick,
+  index = 0,
+}: {
+  project: any;
+  onClick: () => void;
+  index?: number;
+}) {
   const Icon = project.icon;
   const isFeatured = project.featured;
 
@@ -178,25 +214,44 @@ function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: (
       initial={{ opacity: 0, scale: 0.95, y: 30 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
-      transition={{ duration: 0.5, delay: index * 0.05, type: "spring", bounce: 0.2 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.05,
+        type: "spring",
+        bounce: 0.2,
+      }}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`group relative rounded-3xl overflow-hidden cursor-pointer ${
-        isFeatured ? 'md:col-span-2 md:row-span-2' : ''
+      className={`group relative rounded-3xl overflow-hidden cursor-pointer w-full box-border ${
+        isFeatured ? "md:col-span-2 md:row-span-2" : ""
       } glass-card border border-app-border hover:border-electric-blue/50 transition-all duration-500`}
-      style={{ minHeight: isFeatured ? '400px' : '300px', rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
+      style={{
+        minHeight: isFeatured ? "400px" : "300px",
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+        perspective: 1000,
+      }}
     >
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="mobile-blend-layer absolute inset-0 bg-app-bg/80 group-hover:bg-app-bg/60 transition-colors duration-500 z-10 mixture-blend-overlay" />
-        <div className={`mobile-blend-layer absolute inset-0 bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-700 z-10 mix-blend-color-dodge`} />
+        <div className="absolute inset-0 bg-app-bg/80 group-hover:bg-app-bg/60 transition-colors duration-500 z-10 md:mix-blend-overlay" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-700 z-10 md:mix-blend-color-dodge`}
+        />
         {/* Tech Grid Pattern */}
-        <div className="mobile-card-grid absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 z-10" 
-             style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <img 
-          src={project.bgImage} 
-          alt={project.title} 
+        <div
+          className="hidden md:block absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500 z-10"
+          style={{
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <img
+          src={project.bgImage}
+          alt={project.title}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700 ease-out"
@@ -206,8 +261,12 @@ function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: (
       {/* Content */}
       <div className="relative z-20 p-6 md:p-8 h-full flex flex-col justify-between">
         <div className="flex justify-between items-start">
-          <div className={`w-12 h-12 rounded-xl bg-app-card/80 border border-app-border backdrop-blur-md flex items-center justify-center text-white/80 group-hover:text-electric-blue group-hover:border-electric-blue/50 transition-all duration-300 shadow-lg relative overflow-hidden`}>
-            <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-20 transition-opacity`} />
+          <div
+            className={`w-12 h-12 rounded-xl bg-app-card/80 border border-app-border backdrop-blur-md flex items-center justify-center text-white/80 group-hover:text-electric-blue group-hover:border-electric-blue/50 transition-all duration-300 shadow-lg relative overflow-hidden`}
+          >
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-20 transition-opacity`}
+            />
             <Icon className="w-6 h-6 relative z-10" />
           </div>
           <div className="flex items-center gap-2">
@@ -228,19 +287,28 @@ function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: (
             <span className="w-4 h-[1px] bg-electric-blue/50" />
             {project.type}
           </div>
-          <h3 className={`font-semibold text-app-text mb-3 group-hover:text-electric-blue transition-colors ${isFeatured ? 'text-3xl' : 'text-2xl'}`}>
+          <h3
+            className={`font-semibold text-app-text mb-3 group-hover:text-electric-blue transition-colors ${isFeatured ? "text-3xl" : "text-2xl"}`}
+          >
             {project.title}
           </h3>
-          <p className={`text-muted-text/80 text-sm leading-relaxed mb-6 ${isFeatured ? 'line-clamp-3' : 'line-clamp-2'}`}>
+          <p
+            className={`text-muted-text/80 text-sm leading-relaxed mb-6 ${isFeatured ? "line-clamp-3" : "line-clamp-2"}`}
+          >
             {project.description}
           </p>
 
           <div className="flex flex-wrap gap-2">
-            {project.techStack.slice(0, isFeatured ? 4 : 3).map((tech: string, i: number) => (
-              <span key={i} className="px-3 py-1 bg-app-bg/60 backdrop-blur-md border border-app-border text-muted-text text-xs rounded-full group-hover:border-electric-blue/30 transition-colors shadow-sm">
-                {tech}
-              </span>
-            ))}
+            {project.techStack
+              .slice(0, isFeatured ? 4 : 3)
+              .map((tech: string, i: number) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 bg-app-bg/60 backdrop-blur-md border border-app-border text-muted-text text-xs rounded-full group-hover:border-electric-blue/30 transition-colors shadow-sm"
+                >
+                  {tech}
+                </span>
+              ))}
             {project.techStack.length > (isFeatured ? 4 : 3) && (
               <span className="px-3 py-1 bg-app-bg/60 backdrop-blur-md border border-app-border text-muted-text text-xs rounded-full">
                 +{project.techStack.length - (isFeatured ? 4 : 3)}
@@ -249,47 +317,55 @@ function ProjectCard({ project, onClick, index = 0 }: { project: any, onClick: (
           </div>
         </div>
       </div>
-      
+
       {/* Animated Bottom Glow Line */}
-      <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${project.color} w-0 group-hover:w-full transition-all duration-700 ease-out z-20`} />
+      <div
+        className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${project.color} w-0 group-hover:w-full transition-all duration-700 ease-out z-20`}
+      />
     </motion.div>
   );
 }
 
-function ProjectModal({ project, onClose }: { project: any, onClose: () => void }) {
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: any;
+  onClose: () => void;
+}) {
   useEffect(() => {
     if (project) {
       const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
+      document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.body.classList.add('modal-open');
+      document.body.style.width = "100%";
+      document.body.classList.add("modal-open");
     } else {
       const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.classList.remove('modal-open');
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.classList.remove("modal-open");
       if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
       }
     }
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.classList.remove('modal-open');
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.classList.remove("modal-open");
     };
   }, [project]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
     if (project) {
-      window.addEventListener('keydown', handleEsc);
+      window.addEventListener("keydown", handleEsc);
     }
-    return () => window.removeEventListener('keydown', handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, [project, onClose]);
 
   if (!project) return null;
@@ -304,11 +380,11 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
         className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
       >
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-app-bg/90 backdrop-blur-xl"
           onClick={onClose}
         />
-        
+
         {/* Modal Content */}
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -319,18 +395,20 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
         >
           {/* Left Column: Visuals */}
           <div className="md:w-1/2 relative min-h-[300px] md:min-h-full">
-            <div className="mobile-blend-layer absolute inset-0 bg-app-bg/40 z-10 mix-blend-overlay" />
-            <div className={`mobile-blend-layer absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 z-10 mix-blend-color-dodge`} />
-            <img 
-              src={project.bgImage} 
-              alt={project.title} 
+            <div className="hidden md:block absolute inset-0 bg-app-bg/40 z-10 mix-blend-overlay" />
+            <div
+              className={`hidden md:block absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 z-10 mix-blend-color-dodge`}
+            />
+            <img
+              src={project.bgImage}
+              alt={project.title}
               loading="lazy"
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
             />
             {/* Overlay Gradient for readability on mobile */}
             <div className="absolute inset-0 bg-gradient-to-t from-app-card via-app-card/20 to-transparent md:hidden z-10" />
-            
+
             <div className="absolute top-6 left-6 z-20">
               <div className="px-4 py-1.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white shadow-lg">
                 <Activity className="w-3 h-3 text-electric-blue animate-pulse" />
@@ -341,7 +419,7 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
 
           {/* Right Column: Details */}
           <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto relative z-20 flex flex-col bg-app-card/95 backdrop-blur-md">
-            <button 
+            <button
               onClick={onClose}
               aria-label="Close modal"
               className="absolute top-6 right-6 w-10 h-10 rounded-full bg-app-bg flex items-center justify-center border border-app-border text-muted-text hover:text-white hover:border-white/30 transition-all z-30"
@@ -349,7 +427,9 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
               ✕
             </button>
 
-            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} flex items-center justify-center text-white mb-8 shadow-lg`}>
+            <div
+              className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} flex items-center justify-center text-white mb-8 shadow-lg`}
+            >
               <Icon className="w-8 h-8" />
             </div>
 
@@ -357,11 +437,11 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
               <span className="w-6 h-[1px] bg-electric-blue/50" />
               {project.category}
             </div>
-            
+
             <h2 className="text-3xl md:text-5xl font-bold text-app-text mb-4 leading-tight">
               {project.title}
             </h2>
-            
+
             <p className="text-muted-text text-lg leading-relaxed mb-8">
               {project.description}
             </p>
@@ -372,7 +452,10 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((tech: string, i: number) => (
-                  <span key={i} className="px-4 py-2 bg-app-bg border border-app-border text-app-text text-sm rounded-lg hover:border-electric-blue/50 transition-colors shadow-sm">
+                  <span
+                    key={i}
+                    className="px-4 py-2 bg-app-bg border border-app-border text-app-text text-sm rounded-lg hover:border-electric-blue/50 transition-colors shadow-sm"
+                  >
                     {tech}
                   </span>
                 ))}
@@ -380,18 +463,18 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
             </div>
 
             <div className="mt-auto flex flex-col sm:flex-row gap-4 pt-8 border-t border-app-border">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View live preview of ${project.title}`}
+              <button
+                aria-label="View live preview"
                 className="flex-1 px-6 py-4 bg-app-text text-app-bg font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-electric-blue hover:text-white transition-all group shadow-lg"
               >
                 <Eye className="w-5 h-5" />
                 Live Preview
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </a>
-              <button aria-label="View source code on GitHub" className="px-6 py-4 bg-app-bg border border-app-border text-app-text font-semibold rounded-xl flex items-center justify-center hover:border-electric-blue/50 hover:text-electric-blue transition-all shadow-md">
+              </button>
+              <button
+                aria-label="View source code on GitHub"
+                className="px-6 py-4 bg-app-bg border border-app-border text-app-text font-semibold rounded-xl flex items-center justify-center hover:border-electric-blue/50 hover:text-electric-blue transition-all shadow-md"
+              >
                 <Github className="w-5 h-5" />
               </button>
             </div>
@@ -403,46 +486,75 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
 }
 
 export function Projects() {
+  const sectionRef = useEngagementTracker("Projects");
   const [activeCategory, setActiveCategory] = useState(CATEGORIES.ALL);
   const [activeTech, setActiveTech] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
 
   const allTechs = useMemo(() => {
     const techs = new Set<string>();
-    PROJECTS.forEach(p => p.techStack.forEach(t => techs.add(t)));
+    PROJECTS.forEach((p) => p.techStack.forEach((t) => techs.add(t)));
     return Array.from(techs).sort();
   }, []);
 
-  const filteredProjects = PROJECTS.filter(p => {
-    const categoryMatch = activeCategory === CATEGORIES.ALL || p.category === activeCategory;
+  const filteredProjects = PROJECTS.filter((p) => {
+    const categoryMatch =
+      activeCategory === CATEGORIES.ALL || p.category === activeCategory;
     const techMatch = !activeTech || p.techStack.includes(activeTech);
-    const searchMatch = !searchQuery || 
-      p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const searchMatch =
+      !searchQuery ||
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
     return categoryMatch && techMatch && searchMatch;
   });
 
   return (
-    <section id="projects" className="py-24 relative z-10 px-6 max-w-7xl mx-auto">
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="py-24 relative z-10 px-6 w-full max-w-full box-border overflow-hidden mx-auto"
+    >
       {/* Background Ornaments */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-electric-blue/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-      
+      <div className="hidden md:block absolute top-0 right-0 w-[800px] h-[800px] bg-electric-blue/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 relative z-10">
         <div className="border-l-2 border-electric-blue/50 pl-6 relative">
-          <div className="absolute -left-[2px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-electric-blue via-transparent to-transparent" />
+          <div className="hidden md:block absolute -left-[2px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-electric-blue via-transparent to-transparent" />
           <div className="flex items-center gap-2 mb-4">
             <span className="w-2 h-2 rounded-full bg-electric-blue animate-pulse" />
-            <span className="text-xs font-mono text-electric-blue uppercase tracking-widest">Innovation Engine</span>
+            <span className="text-xs font-mono text-electric-blue uppercase tracking-widest">
+              Innovation Engine
+            </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-semibold mb-4 text-app-text">System Architectures</h2>
-          <p className="text-muted-text font-light text-lg max-w-xl">Cinematic showcases of launched AI, interactive ecosystems, and advanced robotics projects.</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 text-app-text break-words">
+            System Architectures
+          </h2>
+          <p className="text-muted-text font-light text-lg max-w-xl break-words">
+            Cinematic showcases of launched AI, interactive ecosystems, and
+            advanced robotics projects.
+          </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <FilterTab label={CATEGORIES.ALL} active={activeCategory === CATEGORIES.ALL} icon={Box} onClick={() => setActiveCategory(CATEGORIES.ALL)} />
-          <FilterTab label={CATEGORIES.ROBOTICS} active={activeCategory === CATEGORIES.ROBOTICS} icon={Rocket} onClick={() => setActiveCategory(CATEGORIES.ROBOTICS)} />
-          <FilterTab label={CATEGORIES.WEB} active={activeCategory === CATEGORIES.WEB} icon={Server} onClick={() => setActiveCategory(CATEGORIES.WEB)} />
+          <FilterTab
+            label={CATEGORIES.ALL}
+            active={activeCategory === CATEGORIES.ALL}
+            icon={Box}
+            onClick={() => setActiveCategory(CATEGORIES.ALL)}
+          />
+          <FilterTab
+            label={CATEGORIES.ROBOTICS}
+            active={activeCategory === CATEGORIES.ROBOTICS}
+            icon={Rocket}
+            onClick={() => setActiveCategory(CATEGORIES.ROBOTICS)}
+          />
+          <FilterTab
+            label={CATEGORIES.WEB}
+            active={activeCategory === CATEGORIES.WEB}
+            icon={Server}
+            onClick={() => setActiveCategory(CATEGORIES.WEB)}
+          />
         </div>
       </div>
 
@@ -459,24 +571,24 @@ export function Projects() {
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0">
-          <button 
+          <button
             onClick={() => setActiveTech(null)}
             className={`shrink-0 px-4 py-2 rounded-xl text-xs font-mono tracking-widest uppercase transition-all duration-300 ${
-              !activeTech 
-                ? 'bg-electric-blue/20 text-electric-blue border-electric-blue/50 shadow-[0_0_15px_rgba(0,122,255,0.2)]' 
-                : 'bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30'
+              !activeTech
+                ? "bg-electric-blue/20 text-electric-blue border-electric-blue/50 shadow-[0_0_15px_rgba(0,122,255,0.2)]"
+                : "bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30"
             } border backdrop-blur-md`}
           >
             All Tech
           </button>
-          {allTechs.map(tech => (
-            <button 
+          {allTechs.map((tech) => (
+            <button
               key={tech}
               onClick={() => setActiveTech(tech)}
               className={`shrink-0 px-4 py-2 rounded-xl text-xs font-mono tracking-widest uppercase transition-all duration-300 ${
-                activeTech === tech 
-                  ? 'bg-electric-blue/20 text-electric-blue border-electric-blue/50 shadow-[0_0_15px_rgba(0,122,255,0.2)]' 
-                  : 'bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30'
+                activeTech === tech
+                  ? "bg-electric-blue/20 text-electric-blue border-electric-blue/50 shadow-[0_0_15px_rgba(0,122,255,0.2)]"
+                  : "bg-app-card/50 text-muted-text border-app-border hover:border-electric-blue/30"
               } border backdrop-blur-md`}
             >
               {tech}
@@ -485,20 +597,26 @@ export function Projects() {
         </div>
       </div>
 
-      <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+      <motion.div
+        layout
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 w-full"
+      >
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project, index) => (
-            <ProjectCard 
-              key={project.id} 
+            <ProjectCard
+              key={project.id}
               index={index}
-              project={project} 
-              onClick={() => setSelectedProject(project as any)} 
+              project={project}
+              onClick={() => setSelectedProject(project as any)}
             />
           ))}
         </AnimatePresence>
       </motion.div>
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }
